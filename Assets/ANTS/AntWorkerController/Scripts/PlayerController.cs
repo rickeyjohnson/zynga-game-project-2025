@@ -37,6 +37,7 @@ namespace ANTS.AntWorkerController
         private PlayerState playerState;
         private Vector2 cameraRotation = Vector2.zero;
         private Vector2 playerTargetRotation = Vector2.zero;
+        //private float antibump;
 
         private float verticalVelocity = 0f;
 
@@ -44,6 +45,8 @@ namespace ANTS.AntWorkerController
         {
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
             playerState = GetComponent<PlayerState>();
+
+            //antibump = runSpeed;
         }
 
         
@@ -83,9 +86,10 @@ namespace ANTS.AntWorkerController
         private void HandleVerticalMovement()
         {
             bool isGrounded = playerState.InGroundedState();
-
+            
+            
             if (isGrounded && verticalVelocity < 0)
-                verticalVelocity = 0f;
+                verticalVelocity = -.5f;
             verticalVelocity -= gravity * Time.deltaTime;
 
             if (playerLocomotionInput.JumpPressed && isGrounded)
@@ -132,9 +136,9 @@ namespace ANTS.AntWorkerController
 
         private bool IsGrounded()
         {
-            bool grounded = playerState.InGroundedState() ? IsGroundedWhileGrounded() : IsGroundedWhileAirborne();
-            return grounded;
+            return characterController.isGrounded;
         }
+
 
         private bool IsGroundedWhileGrounded()
         {
