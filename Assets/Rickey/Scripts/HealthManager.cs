@@ -5,25 +5,36 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int maxHealth = 10; // lets say average thing has 10 hearts
+    private int maxHealth = 100;
     private int currentHealth;
-    public event Action OnDeath;
+    public static Health instance;
 
-    private void Awake()
+    void Awake()
+    {
+        instance = this;
+    }
+    void Start()
     {
         currentHealth = maxHealth;
-        if (currentHealth <= 0) { Die(); }
-    }
-
-    private void Die()
-    {
-        OnDeath?.Invoke();
-        Destroy(gameObject);
+        SliderManager.instance.slider.maxValue = maxHealth;
+        SliderManager.instance.slider.value = currentHealth;
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        SliderManager.instance.UpdateSlider(-damage);
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Death -- to be added!");
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        SliderManager.instance.UpdateSlider(amount);
     }
 
     public int GetCurrentHealth()
