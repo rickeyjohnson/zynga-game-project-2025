@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    private int maxHealth = 100;
+    public int maxHealth = 100;
     private int currentHealth;
-    public static Health instance;
+    public static PlayerHealth instance;
+    private HealthBar healthBar;
 
     void Awake()
     {
@@ -16,14 +17,14 @@ public class Health : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        SliderManager.instance.slider.maxValue = maxHealth;
-        SliderManager.instance.slider.value = currentHealth;
+        healthBar = HealthBar.instance;
+        healthBar.UpdateHealthBar();
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        SliderManager.instance.UpdateSlider(-damage);
+        healthBar?.UpdateHealthBar();
 
         if (currentHealth <= 0)
         {
@@ -34,7 +35,7 @@ public class Health : MonoBehaviour
     public void Heal(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        SliderManager.instance.UpdateSlider(amount);
+        healthBar?.UpdateHealthBar();
     }
 
     public int GetCurrentHealth()

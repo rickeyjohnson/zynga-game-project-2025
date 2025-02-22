@@ -11,7 +11,7 @@ public class SliderManager : MonoBehaviour
 
     void Start()
     {
-        slider.maxValue = Health.instance.GetCurrentHealth();
+        slider.maxValue = PlayerHealth.instance.GetCurrentHealth();
     }
 
     void Awake()

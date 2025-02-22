@@ -9,6 +9,6 @@ public class ScoreTextManager : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = "Ants Killed: " + ScoreManager.instance.GetScore();
+        // scoreText.text = "Ants Killed: " + ScoreManager.instance.GetScore();
     }
 }
