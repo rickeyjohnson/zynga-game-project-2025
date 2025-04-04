@@ -18,7 +18,9 @@ namespace ANTS.AntWorkerController
       private static int isGroundedHash = Animator.StringToHash("isGrounded");
       private static int isJumpingHash = Animator.StringToHash("isJumping");
       private static int isFallingHash = Animator.StringToHash("isFalling");
-      
+      private static int isAttacking1Hash = Animator.StringToHash("isAttacking1");
+      private static int isAttacking2Hash = Animator.StringToHash("isAttacking2");
+
       private Vector3 currentBlendInput = Vector3.zero;
 
       private void Awake()
@@ -40,7 +42,9 @@ namespace ANTS.AntWorkerController
           bool isJumping = playerState.CurrentPlayerMovementState == PlayerMovementState.Jumping;
           bool isFalling = playerState.CurrentPlayerMovementState == PlayerMovementState.Falling;
           bool isGrounded = playerState.InGroundedState();
-          
+          bool isAttacking1 = playerState.CurrentPlayerMovementState == PlayerMovementState.Attacking1;
+          bool isAttacking2 = playerState.CurrentPlayerMovementState == PlayerMovementState.Attacking2;
+
          
           Vector2 inputTarget = playerLocomotionInput.MovementInput;
           currentBlendInput = Vector3.Lerp(currentBlendInput, inputTarget, locomotionBlendSpeed * Time.deltaTime);
@@ -48,6 +52,8 @@ namespace ANTS.AntWorkerController
           animator.SetBool(isGroundedHash, isGrounded);
           animator.SetBool(isJumpingHash, isJumping);
           animator.SetBool(isFallingHash, isFalling);
+          animator.SetBool(isAttacking1Hash,isAttacking1);
+          animator.SetBool(isAttacking2Hash,isAttacking2);
           animator.SetFloat(inputXHash, inputTarget.x);
           animator.SetFloat(inputYHash, inputTarget.y);
       }

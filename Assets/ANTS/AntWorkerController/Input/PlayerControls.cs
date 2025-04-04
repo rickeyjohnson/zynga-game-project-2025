@@ -55,6 +55,24 @@ namespace ANTS.AntWorkerController
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack1"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f1e0f4c-4976-48de-bac9-85e3b82fe0b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack2"",
+                    ""type"": ""Button"",
+                    ""id"": ""c57a4cbc-d590-4c99-99ca-603315189617"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -189,6 +207,28 @@ namespace ANTS.AntWorkerController
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8d36b00-22c3-4667-8dc5-e2cde1c091ed"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c7dddbd-09fe-4d39-bf69-2244cb9a8fab"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -200,6 +240,8 @@ namespace ANTS.AntWorkerController
             m_PlayerLocomotionMap_Movement = m_PlayerLocomotionMap.FindAction("Movement", throwIfNotFound: true);
             m_PlayerLocomotionMap_Look = m_PlayerLocomotionMap.FindAction("Look", throwIfNotFound: true);
             m_PlayerLocomotionMap_Jump = m_PlayerLocomotionMap.FindAction("Jump", throwIfNotFound: true);
+            m_PlayerLocomotionMap_Attack1 = m_PlayerLocomotionMap.FindAction("Attack1", throwIfNotFound: true);
+            m_PlayerLocomotionMap_Attack2 = m_PlayerLocomotionMap.FindAction("Attack2", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -264,6 +306,8 @@ namespace ANTS.AntWorkerController
         private readonly InputAction m_PlayerLocomotionMap_Movement;
         private readonly InputAction m_PlayerLocomotionMap_Look;
         private readonly InputAction m_PlayerLocomotionMap_Jump;
+        private readonly InputAction m_PlayerLocomotionMap_Attack1;
+        private readonly InputAction m_PlayerLocomotionMap_Attack2;
         public struct PlayerLocomotionMapActions
         {
             private @PlayerControls m_Wrapper;
@@ -271,6 +315,8 @@ namespace ANTS.AntWorkerController
             public InputAction @Movement => m_Wrapper.m_PlayerLocomotionMap_Movement;
             public InputAction @Look => m_Wrapper.m_PlayerLocomotionMap_Look;
             public InputAction @Jump => m_Wrapper.m_PlayerLocomotionMap_Jump;
+            public InputAction @Attack1 => m_Wrapper.m_PlayerLocomotionMap_Attack1;
+            public InputAction @Attack2 => m_Wrapper.m_PlayerLocomotionMap_Attack2;
             public InputActionMap Get() { return m_Wrapper.m_PlayerLocomotionMap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -289,6 +335,12 @@ namespace ANTS.AntWorkerController
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Attack1.started += instance.OnAttack1;
+                @Attack1.performed += instance.OnAttack1;
+                @Attack1.canceled += instance.OnAttack1;
+                @Attack2.started += instance.OnAttack2;
+                @Attack2.performed += instance.OnAttack2;
+                @Attack2.canceled += instance.OnAttack2;
             }
 
             private void UnregisterCallbacks(IPlayerLocomotionMapActions instance)
@@ -302,6 +354,12 @@ namespace ANTS.AntWorkerController
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @Attack1.started -= instance.OnAttack1;
+                @Attack1.performed -= instance.OnAttack1;
+                @Attack1.canceled -= instance.OnAttack1;
+                @Attack2.started -= instance.OnAttack2;
+                @Attack2.performed -= instance.OnAttack2;
+                @Attack2.canceled -= instance.OnAttack2;
             }
 
             public void RemoveCallbacks(IPlayerLocomotionMapActions instance)
@@ -324,6 +382,8 @@ namespace ANTS.AntWorkerController
             void OnMovement(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnAttack1(InputAction.CallbackContext context);
+            void OnAttack2(InputAction.CallbackContext context);
         }
     }
 }

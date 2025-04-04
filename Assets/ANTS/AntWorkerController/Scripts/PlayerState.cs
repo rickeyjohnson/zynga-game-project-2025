@@ -30,7 +30,11 @@ namespace ANTS.AntWorkerController
         Sprinting = 3,
         Jumping = 4,
         Falling = 5,
-        Strafing = 6,
+        Dying = 6,
+        TakingDamage = 7,
+        Attacking1 = 8,
+        Attacking2 = 9,
+        Strafing = 10,
     }
 }
 

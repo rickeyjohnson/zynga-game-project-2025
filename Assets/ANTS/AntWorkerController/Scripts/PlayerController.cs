@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ANTS.AntWorkerController
 {
@@ -38,7 +39,10 @@ namespace ANTS.AntWorkerController
         private Vector2 cameraRotation = Vector2.zero;
         private Vector2 playerTargetRotation = Vector2.zero;
         //private float antibump;
-
+        private int HP = 100;
+        
+        public Slider healthBar;
+        public Animator animator; 
         private float verticalVelocity = 0f;
 
         private void Awake()
@@ -52,9 +56,12 @@ namespace ANTS.AntWorkerController
         
         private void Update()
         {
+            healthBar.value = HP;
             UpdateMovementState();
             HandleVerticalMovement();
             HandleLateralMovement();
+            Fighting();
+            
             
         }
         
@@ -152,6 +159,58 @@ namespace ANTS.AntWorkerController
         {
             return characterController.isGrounded;
         }
+        
+        private void Fighting()
+        {
+            bool isAttack1 = playerLocomotionInput.Attack1Pressed;
+            bool isAttack2 = playerLocomotionInput.Attack2Pressed;
+           
+
+            if (isAttack1)
+            {
+                playerState.SetPlayerMovementState(PlayerMovementState.Attacking1);
+                
+            }
+
+            if (isAttack2)
+            {
+                playerState.SetPlayerMovementState(PlayerMovementState.Attacking2);
+            }
+            
+        }
+        
+        public void TakeDamage(int damage)
+        {
+            HP -= damage;
+            healthBar.value = HP;
+            if (HP <= 0)
+            {
+                //Play Death Animation
+                animator.SetTrigger("dead");
+                GetComponent<Collider>().enabled = false;
+            }
+            else
+            {
+                //PlayGetHitAnimation
+                animator.SetTrigger("damage");
+            
+            }
+        }
+        
+        /*
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log($"Player Collided with {other.gameObject.name}"); 
+            if (other.tag == "Robot" && _playerState.CurrentMovementState == PlayerMovementState.Punching1)
+            {
+                Debug.Log($"Player Dealt Damage with {other.gameObject.name}"); 
+                
+                other.GetComponent<Robot>().TakeDamage(20);
+
+            }
+            */
+           
     }
     
 }

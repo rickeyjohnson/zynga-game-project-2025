@@ -16,6 +16,8 @@ namespace ANTS.AntWorkerController
        public Vector2 LookInput {get; private set;}
        
        public bool JumpPressed {get; private set;}
+       public bool Attack1Pressed {get; private set;}
+       public bool Attack2Pressed {get; private set;}
 
        private void OnEnable()
        {
@@ -42,6 +44,8 @@ namespace ANTS.AntWorkerController
        private void LateUpdate()
        {
            JumpPressed = false;
+           Attack2Pressed = false;
+           Attack1Pressed = false;
        }
 
        public void OnLook(InputAction.CallbackContext context)
@@ -55,6 +59,22 @@ namespace ANTS.AntWorkerController
                return;
            
            JumpPressed = true;
+       }
+
+       public void OnAttack1(InputAction.CallbackContext context)
+       {
+           if (!context.performed)
+               return;
+           
+           Attack1Pressed = true;
+       }
+
+       public void OnAttack2(InputAction.CallbackContext context)
+       {
+           if (!context.performed)
+               return;
+           
+           Attack2Pressed = true;
        }
     }
 }
