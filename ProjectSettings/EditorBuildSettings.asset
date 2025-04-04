@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Rickey/Scenes/StartScene.unity
+    guid: 3b4e241e1b65242cd9e7c9f2a587f8f7
+  - enabled: 1
+    path: Assets/Rickey/Scenes/RickeysScene.unity
+    guid: e0d4bb84dae8d4b42b67b14ffa083b91
+  - enabled: 1
+    path: Assets/Rickey/Scenes/DeathScene.unity
+    guid: 270d69b275fd84f22850fa21df201188
   m_configObjects: {}
